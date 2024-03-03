@@ -23,7 +23,21 @@
 # Antglo 3/4/2024
 ### This will have examples on how to manipulate items within the DB using the Session
 
-import models
+from models import engine, Devices
 from sqlalchemy.orm import Session
 
-def add_device
+#add a device to the database [ device, name, desc ]
+def add_device():
+    '''This is an example on how it is done'''
+    with Session(engine) as session:
+        sca = Devices(
+            device = 'sca',
+            name = 'Security Appliance',
+            desc = 'This is a security appliance'
+        )
+    
+    session.add_all([sca])
+    
+    session.commit
+
+add_device()

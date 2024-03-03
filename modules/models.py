@@ -9,7 +9,7 @@ from sqlalchemy import ForeignKey, String, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 # Declare the engine to connect to your DB
-engine = create_engine('sqlite:///:memory:', echo=True) # echo flag instructs the engine to log all the SQL it emits to a python logger 
+engine = create_engine('sqlite:///database.db', echo=True) # echo flag instructs the engine to log all the SQL it emits to a python logger 
 
 # DeclarativeBase by making a subclasses of Base
 class Base(DeclarativeBase):
@@ -24,6 +24,12 @@ class Devices(Base):
     device: Mapped[str] = mapped_column(String(15))
     name: Mapped[str] = mapped_column(String(15))
     desc: Mapped[Optional[str]]
+    
+    # add an __init__ constructor to allow them as arguments
+    def __init__(self, device, name, desc):
+        self.device = device
+        self.name = name
+        self.desc = desc
     
     # The method __repr__ is not necessary used for debugging
     def __repr__(self) -> str:
