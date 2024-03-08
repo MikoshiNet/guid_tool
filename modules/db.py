@@ -24,20 +24,22 @@
 ### This will have examples on how to manipulate items within the DB using the Session
 
 from models import engine, Devices
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 
-#add a device to the database [ device, name, desc ]
+# Create a sessionmaker bound to the engine
+Session = sessionmaker(bind=engine)
+
+# Add a device to the database [ device, name, desc ]
 def add_device():
     '''This is an example on how it is done'''
-    with Session(engine) as session:
+    with Session() as session:
         sca = Devices(
-            device = 'sca',
-            name = 'Security Appliance',
-            desc = 'This is a security appliance'
+            device='sca',
+            name='Security Appliance',
+            desc='This is a security appliance'
         )
     
-    session.add_all([sca])
-    
-    session.commit
+        session.add(sca)
+        session.commit()
 
 add_device()

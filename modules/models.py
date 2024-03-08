@@ -3,27 +3,23 @@
 ### This file contains the metadata necessary to create tables and declarative bases/mappings
 
 # import necessary constructs
-from typing import Any, List
-from typing import Optional
-from sqlalchemy import ForeignKey, String, create_engine
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy import String, create_engine, Column, Integer
+from sqlalchemy.ext.declarative import declarative_base
 
 # Declare the engine to connect to your DB
-engine = create_engine('sqlite:///database.db', echo=True) # echo flag instructs the engine to log all the SQL it emits to a python logger 
+engine = create_engine('sqlite:///modules/database.db', echo=True) # echo flag instructs the engine to log all the SQL it emits to a python logger 
 
 # DeclarativeBase by making a subclasses of Base
-class Base(DeclarativeBase):
-    def __init__(self, id):
-        self.id = id
+Base = declarative_base()
 
 # Define the class for the table (Devices)
 class Devices(Base):
     __tablename__ = 'devices'
     
-    id: Mapped[int] = mapped_column(primary_key=True) # the mapped_column allows you to further customize the column
-    device: Mapped[str] = mapped_column(String(15))
-    name: Mapped[str] = mapped_column(String(15))
-    desc: Mapped[Optional[str]]
+    id = Column(Integer, primary_key=True) # the mapped_column allows you to further customize the column
+    device = Column(String(15))
+    name = Column(String(15))
+    desc = Column(String)
     
     # add an __init__ constructor to allow them as arguments
     def __init__(self, device, name, desc):
