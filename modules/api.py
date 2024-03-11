@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from models import Base, Devices
 
 # Create SQLAlchemy engine and session
-engine = create_engine('sqlite:///database.db', echo=True)
+engine = create_engine('sqlite:///modules/database.db', echo=True)
 Session = sessionmaker(bind=engine)
 
 # Create Discord bot instance
