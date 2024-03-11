@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring
+# pylint: disable=missing-docstring, import-error
 '''Pevious code (Using as guidlines)'''
 ###from modules.file_handler import get_file_json_content, set_file_json_content
 ###
@@ -24,10 +24,13 @@
 ### This will have examples on how to manipulate items within the DB using the Session
 
 from models import engine, Devices
+from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
 # Create a sessionmaker bound to the engine
 Session = sessionmaker(bind=engine)
+# create a session
+session = Session()
 
 # Add a device to the database [ device, name, desc ]
 def add_device():
@@ -43,3 +46,7 @@ def add_device():
         session.commit()
 
 add_device()
+
+# Using select statement to query database.db
+stmt = session.query(Devices).filter(Devices.id == "1").all() # .one() can be used for a specific query
+print(stmt)
