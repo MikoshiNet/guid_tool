@@ -7,7 +7,7 @@ The GUID-tool is a backend API designed to facilitate the creation of templates 
 To install the GUID-tool, clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/MikoshiNet/guid_tool/new/sqlalchemy_pilot
+git clone https://github.com/MikoshiNet/guid_tool.git
 cd GUID-tool
 pip install -r requirements.txt
 ```
