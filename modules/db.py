@@ -24,6 +24,7 @@
 ### This will have examples on how to manipulate items within the DB using the Session
 
 from models import engine, Devices
+<<<<<<< HEAD
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
@@ -34,6 +35,17 @@ session = Session()
 
 # Add a device to the database [ device, name, desc ]
 def add_device():
+=======
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+Session = sessionmaker
+
+Session.configure(bind=engine)
+
+#add a device to the database [ device, name, desc ]
+def add_device(device_name, device_desc):
+>>>>>>> 395fa0f (patch)
     '''This is an example on how it is done'''
     with Session() as session:
         sca = Devices(
@@ -45,8 +57,28 @@ def add_device():
         session.add(sca)
         session.commit()
 
+<<<<<<< HEAD
 add_device()
 
 # Using select statement to query database.db
 stmt = session.query(Devices).filter(Devices.id == "1").all() # .one() can be used for a specific query
 print(stmt)
+=======
+def query_device():
+    '''Query device table'''
+    session = Session()
+
+    devices = session.query(Devices).all()
+
+    session.close()
+
+    return devices
+
+if __name__ == '__main__':
+    add_device('exmaple', 'example desc for the example')
+
+    devices = query_device()
+    print('Example: ')
+    for device in devices:
+        print(device)
+>>>>>>> 395fa0f (patch)
