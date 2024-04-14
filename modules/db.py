@@ -3,7 +3,7 @@
 from models import Devices
 from flask_restful import Resource, reqparse
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 
 # Create the engine
 engine = create_engine('sqlite:///modules/database.db', echo=True)
@@ -19,7 +19,7 @@ class DeviceInt(Resource):
 
         devices = session.query(Devices).all()
         session.close()
-        return{'devices': [{'id':device.id, 'device':device.device, 
+        return{'devices': [{'uid':device.uid, 'device':device.device, 
                             'desc':device.desc
                             } for device in devices]}, 200
     def post(self):
@@ -32,11 +32,12 @@ class DeviceInt(Resource):
 
         # insert a device into the database
         with Session() as session:
-            new_device = Devices(device=args['device'], desc=args['desc'])
+            # Add 0's to the id
+            next_id = session.query(func.max(Devices.id)).scalar() or 0
+            uid = f'{str(next_id + 1).zfill(4)}{args["device"]}' # Combine id and device
+
+            new_device = Devices(uid=uid, device=args['device'], desc=args['desc'])
             session.add(new_device)
-            session.flush()
-            device_id = new_device.id
-            device_type = new_device.device
             session.commit()
 
-        return {'device_id': f'{device_type}{str(device_id).zfill(4)}'}, 201
+        return {'device_id': uid}, 201

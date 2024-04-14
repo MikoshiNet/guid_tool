@@ -17,14 +17,14 @@ class Devices(Base):
     __tablename__ = 'devices'
     
     id = Column(Integer, primary_key=True) # the mapped_column allows you to further customize the column
+    uid = Column(String(15))
     device = Column(String(15))
-    #name = Column(String(15))
     desc = Column(String)
     
     # add an __init__ constructor to allow them as arguments
-    def __init__(self, device, desc):
+    def __init__(self, uid, device, desc):
+        self.uid = uid
         self.device = device
-        #self.name = name
         self.desc = desc
     
     # The method __repr__ is not necessary used for debugging
