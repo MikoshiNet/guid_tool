@@ -4,14 +4,14 @@
 
 from flask import Flask
 from flask_restful import Api
-from .db import DeviceResource
+from db import DeviceInt
 
 # Create Flask app
 app = Flask(__name__)
 api = Api(app)
 
 # Add resource to API
-api.add_resource(DeviceResource, '/devices')
+api.add_resource(DeviceInt, '/devices')
 
 if __name__ == '__main__':
     app.run(debug=True)

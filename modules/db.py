@@ -12,7 +12,7 @@ engine = create_engine('sqlite:///modules/database.db', echo=True)
 Session = sessionmaker(bind=engine)
 
 # Resources for devices
-class DeviceResource(Resource):
+class DeviceInt(Resource):
     def get(self):
         '''Query device table'''
         session = Session()
@@ -36,7 +36,7 @@ class DeviceResource(Resource):
             session.add(new_device)
             session.flush()
             device_id = new_device.id
-            device_type = new_device.name
+            device_type = new_device.device
             session.commit()
 
         return {'device_id': f'{device_type}{str(device_id).zfill(4)}'}, 201
