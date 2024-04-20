@@ -23,6 +23,7 @@ class Devices(Base):
     
     # add an __init__ constructor to allow them as arguments
     def __init__(self, uid, device, desc):
+        #self.id = id
         self.uid = uid
         self.device = device
         self.desc = desc
